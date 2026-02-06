@@ -31,14 +31,38 @@
     }
   </style>
 </head>
+  <script>
+function generateStory() {
+  const prompt = document.getElementById("prompt").value;
+  const resultDiv = document.getElementById("result");
+
+  if (prompt.trim() === "") {
+    resultDiv.innerHTML = "⚠️ من فضلك اكتب فكرة القصة الأول";
+    return;
+  }
+
+  resultDiv.innerHTML = "⏳ جاري إنشاء القصة...";
+
+  // مؤقتًا (اختبار)
+  setTimeout(() => {
+    resultDiv.innerHTML = `
+      📖 <strong>قصة قصيرة:</strong><br><br>
+      كان يا ما كان ${prompt}، وتعلّم الطفل في النهاية درسًا جميلًا ❤️
+    `;
+  }, 1000);
+}
+</script>
 <body>
 
   <h1>📖 StoryKid AI</h1>
   <p>اكتب فكرة قصة والذكاء الاصطناعي هيكملها للطفل</p>
+<textarea id="prompt" placeholder="اكتب بداية القصة هنا..."></textarea>
+<br>
+<button onclick="generateStory()">✨ أنشئ القصة</button>
 
-  <textarea placeholder="اكتب بداية القصة هنا..."></textarea>
-  <br>
-  <button>✨ Generate Story</button>
+<div id="result" style="margin-top:20px;font-size:18px;"></div>
 
 </body>
 </html>
+  
+

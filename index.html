@@ -1,68 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
   <title>StoryKid AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg,#667eea,#764ba2);
-      color: white;
+      font-family: "Cairo", sans-serif;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      margin: 0;
+      padding: 0;
+      direction: rtl;
       text-align: center;
-      padding: 40px;
     }
+
+    .app {
+      max-width: 500px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #ff6f00;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
     textarea {
-      width: 90%;
-      height: 120px;
-      border-radius: 10px;
-      padding: 10px;
-      border: none;
-      font-size: 16px;
+      min-height: 160px;
+      margin-top: 15px;
+      resize: none;
     }
+
     button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      font-size: 18px;
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
       border: none;
-      border-radius: 25px;
-      background: #ffcc00;
+      border-radius: 14px;
+      background: #ff6f00;
+      color: #fff;
+      font-size: 16px;
       cursor: pointer;
+    }
+
+    button.secondary {
+      background: #4caf50;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #888;
     }
   </style>
 </head>
-  <script>
-function generateStory() {
-  const prompt = document.getElementById("prompt").value;
-  const resultDiv = document.getElementById("result");
 
-  if (prompt.trim() === "") {
-    resultDiv.innerHTML = "⚠️ من فضلك اكتب فكرة القصة الأول";
-    return;
-  }
-
-  resultDiv.innerHTML = "⏳ جاري إنشاء القصة...";
-
-  // مؤقتًا (اختبار)
-  setTimeout(() => {
-    resultDiv.innerHTML = `
-      📖 <strong>قصة قصيرة:</strong><br><br>
-      كان يا ما كان ${prompt}، وتعلّم الطفل في النهاية درسًا جميلًا ❤️
-    `;
-  }, 1000);
-}
-</script>
 <body>
 
-  <h1>📖 StoryKid AI</h1>
-  <p>اكتب فكرة قصة والذكاء الاصطناعي هيكملها للطفل</p>
-<textarea id="prompt" placeholder="اكتب بداية القصة هنا..."></textarea>
-<br>
-<button onclick="generateStory()">✨ أنشئ القصة</button>
+  <div class="app">
+    <h1>📚 StoryKid AI</h1>
+    <p>أنشئ قصة أطفال جميلة في ثواني ✨</p>
 
-<div id="result" style="margin-top:20px;font-size:18px;"></div>
+    <input id="hero" placeholder="👦 اسم بطل القصة (مثال: آدم)" />
+
+    <select id="type">
+      <option value="مغامرة">🗺️ مغامرة</option>
+      <option value="تعليمية">📘 تعليمية</option>
+      <option value="مضحكة">😂 مضحكة</option>
+      <option value="خيال">🦄 خيال</option>
+    </select>
+
+    <button onclick="generateStory()">✨ أنشئ القصة</button>
+    <button class="secondary" onclick="readStory()">🔊 قراءة بصوت</button>
+
+    <textarea id="story" placeholder="القصة ستظهر هنا..."></textarea>
+
+    <footer>
+      © StoryKid AI – ذكاء اصطناعي للأطفال
+    </footer>
+  </div>
+
+  <script>
+    function generateStory() {
+      const hero = document.getElementById("hero").value || "طفل شجاع";
+      const type = document.getElementById("type").value;
+
+      const story = `كان يا ما كان 👑  
+في يوم من الأيام كان هناك ${hero} يحب ${type} 🌈  
+وفي مغامرة جميلة تعلّم الشجاعة واللطف  
+وفي النهاية عاش سعيدًا مع أصدقائه 😊✨`;
+
+      document.getElementById("story").value = story;
+    }
+
+    function readStory() {
+      const text = document.getElementById("story").value;
+      if (!text) return;
+
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.lang = "ar-SA";
+      window.speechSynthesis.speak(speech);
+    }
+  </script>
 
 </body>
 </html>
-  
-
